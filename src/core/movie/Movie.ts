@@ -4,7 +4,7 @@ export class Movie {
   title: string = ''
   year: number = 0
   rated: string = ''
-  released: string = ''
+  releasedDate: string = ''
   duration: string = ''
   plot: string = ''
   poster: string = ''
@@ -18,6 +18,6 @@ export class Movie {
 }
 
 export class MovieRating {
-  source: string
-  value: string
+  source: string = ''
+  value: string = ''
 }
