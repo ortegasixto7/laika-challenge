@@ -10,7 +10,7 @@ export class MySQLMoviePersistence extends MySQLConnection implements IMoviePers
     super()
   }
 
-  async getAll(offset: number, limit: number): Promise<Movie[]> {
+  async getPaginated(offset: number, limit: number): Promise<Movie[]> {
     const result = await this.movieTable.findAll({ offset, limit })
     const data: Movie[] = []
     result.map(item => data.push(item.toJSON()))

@@ -1,4 +1,4 @@
-export class GetAllRequest {
+export class GetPaginatedRequest {
   page: number = 1
 
   constructor(request: any) {

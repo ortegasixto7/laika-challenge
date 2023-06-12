@@ -7,14 +7,14 @@ import { UpdateRequest } from '../core/movie/useCases/update/UpdateRequest'
 import { UpdateUseCase } from '../core/movie/useCases/update/UpdateUseCase'
 import { DeleteRequest } from '../core/movie/useCases/delete/DeleteRequest'
 import { DeleteUseCase } from '../core/movie/useCases/delete/DeleteUseCase'
-import { GetAllRequest } from '../core/movie/useCases/getAll/GetAllRequest'
-import { GetAllUseCase } from '../core/movie/useCases/getAll/GetAllUseCase'
+import { GetPaginatedRequest } from '../core/movie/useCases/getPaginated/GetPaginatedRequest'
+import { GetPaginatedUseCase } from '../core/movie/useCases/getPaginated/GetPaginatedUseCase'
 
 const router = Router()
 
-router.get('/v1', async (req: Request, res: Response) => {
+router.get('/paginated/v1', async (req: Request, res: Response) => {
   await RequestService.wrapper(async () => {
-    return await new GetAllUseCase(moviePersistence).execute(new GetAllRequest(req.query))
+    return await new GetPaginatedUseCase(moviePersistence).execute(new GetPaginatedRequest(req.query))
   }, res)
 })
 
