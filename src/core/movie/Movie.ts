@@ -8,6 +8,7 @@ export class Movie {
   duration: string = ''
   plot: string = ''
   poster: string = ''
+  rating: number = 0
   genres: string[] = []
   directors: string[] = []
   writers: string[] = []
