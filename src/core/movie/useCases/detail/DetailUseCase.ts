@@ -7,17 +7,28 @@ import { IMoviePersistence } from '../../IMoviePersistence'
 import { NotFoundException } from "../../../../infrastructure/exception/NotFoundException"
 import { IMovieExternalService } from "../../../../external/movie/IMovieExternalService"
 import { Movie } from "../../Movie"
+import { ICacheService } from "../../../../external/cache/ICacheService"
 
 export class DetailUseCase implements IUseCaseQuery<DetailRequest, DetailResponse>{
-  constructor(private moviePersistence: IMoviePersistence, private movieExternalService: IMovieExternalService) { }
+  constructor(private moviePersistence: IMoviePersistence, private movieExternalService: IMovieExternalService, private cacheService: ICacheService) { }
 
   async execute(request: DetailRequest): Promise<DetailResponse> {
     if (!request.title) throw new BadRequestException(ExceptionCodeEnum.TITLE_IS_REQUIRED)
-    let movie: Movie | null = null
-    movie = await this.moviePersistence.getByTitleOrNull(request.title)
-    movie = await this.movieExternalService.getByTitle(request.title)
+    let movie: Movie | null | undefined = null
+    let movieIsFromExternalAPI = false
+    movie = this.cacheService.get(request.title)
+    if (!movie) movie = await this.moviePersistence.getByTitleOrNull(request.title)
+    if (!movie) {
+      movieIsFromExternalAPI = true
+      movie = await this.movieExternalService.getByTitle(request.title)
+    }
     if (!movie) throw new NotFoundException(ExceptionCodeEnum.MOVIE_NOT_FOUND)
+    if (movieIsFromExternalAPI) {
+      await this.moviePersistence.create(movie)
+      this.cacheService.set(request.title, movie)
+    }
     const result = new DetailResponse()
+    result.id = movie.id
     result.actors = movie.actors
     result.awards = movie.awards
     result.directors = movie.directors
