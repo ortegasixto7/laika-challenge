@@ -3,7 +3,7 @@ import { httpService } from "../../infrastructure/DependencyInjector";
 import { Movie } from "../../core/movie/Movie";
 
 export class OMDBMovieExternalService implements IMovieExternalService {
-  private readonly URL_BASE = `http://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}`
+  private readonly URL_BASE = `http://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}&type=movie`
 
   async getByTitle(title: string): Promise<Movie | null> {
     try {
@@ -19,11 +19,13 @@ export class OMDBMovieExternalService implements IMovieExternalService {
       result.plot = resultApi.data.Plot
       result.poster = resultApi.data.Poster
       result.rated = resultApi.data.Rated
-      result.rating = Number(resultApi.data.imdbRating)
       result.releasedDate = resultApi.data.Released
       result.title = resultApi.data.Title
       result.writers = resultApi.data.Writer?.split(', ')
-      result.year = Number(resultApi.data.Year);
+      result.year = Number(resultApi.data.Year) ?? 2000;
+      result.rating = Number(resultApi.data.imdbRating);
+      if (isNaN(result.rating)) result.rating = 0;
+
       (resultApi.data.Ratings as Array<any>).map((item: any) => {
         result.ratings.push({ source: item.Source, value: item.Value })
       })

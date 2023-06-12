@@ -7,14 +7,14 @@ export class MySQLConnection {
   movieTable: ModelStatic<Model<Movie>>;
 
   constructor() {
-    this.sequelize = new Sequelize(`mysql://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`)
+    this.sequelize = new Sequelize(`mysql://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, { logging: false })
     this.movieTable = this.sequelize.define('movies', {
       id: { type: DataTypes.STRING, primaryKey: true },
       title: { type: DataTypes.STRING },
       year: { type: DataTypes.INTEGER },
       rating: { type: DataTypes.FLOAT },
       rated: { type: DataTypes.STRING },
-      releasedDate: { type: DataTypes.DATE, field: 'released_date' },
+      releasedDate: { type: DataTypes.STRING, field: 'released_date' },
       duration: { type: DataTypes.STRING },
       genres: { type: DataTypes.JSON },
       directors: { type: DataTypes.JSON },
