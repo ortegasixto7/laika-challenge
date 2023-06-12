@@ -24,6 +24,7 @@ export class UpdateUseCase implements IUseCaseCommand<UpdateRequest>{
     if (request.title) movie.title = request.title
     if (request.writers) movie.writers = request.writers
     if (request.year) movie.year = request.year
+    if (request.rating) movie.rating = request.rating
 
     await this.moviePersistence.update(movie)
   }

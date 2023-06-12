@@ -3,6 +3,7 @@ export class UpdateRequest {
   id: string = ''
   title?: string = undefined
   year?: number = undefined
+  rating?: number = undefined
   rated?: string = undefined
   releasedDate?: string = undefined
   duration?: string = undefined
@@ -20,6 +21,7 @@ export class UpdateRequest {
     if (request.id) this.id = request.id
     if (request.title) this.title = request.title
     if (request.year) this.year = request.year
+    if (request.rating) this.rating = request.rating
     if (request.rated) this.rated = request.rated
     if (request.releasedDate) this.releasedDate = request.releasedDate
     if (request.duration) this.duration = request.duration
