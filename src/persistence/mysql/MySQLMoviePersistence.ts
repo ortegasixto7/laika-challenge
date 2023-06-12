@@ -10,9 +10,11 @@ export class MySQLMoviePersistence extends MySQLConnection implements IMoviePers
     super()
   }
 
-  async getAll(): Promise<Movie[]> {
-    const result = await this.movieTable.findAll()
-    return []
+  async getAll(offset: number, limit: number): Promise<Movie[]> {
+    const result = await this.movieTable.findAll({ offset, limit })
+    const data: Movie[] = []
+    result.map(item => data.push(item.toJSON()))
+    return data
   }
 
   async getByTitleOrNull(title: string): Promise<Movie | null> {
