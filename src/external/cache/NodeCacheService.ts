@@ -4,7 +4,7 @@ import { ICacheService } from './ICacheService';
 export class NodeCacheService implements ICacheService {
   private cacheService: NodeCache = new NodeCache();
   private static instance: NodeCacheService;
-  private MAX_TIME_TO_LIVE: number = 604800; // 7 days in seconds
+  private MAX_TIME_TO_LIVE: number = 86400; // 1 day in seconds
 
   private constructor() { }
 
