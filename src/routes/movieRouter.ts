@@ -9,8 +9,16 @@ import { DeleteRequest } from '../core/movie/useCases/delete/DeleteRequest'
 import { DeleteUseCase } from '../core/movie/useCases/delete/DeleteUseCase'
 import { GetPaginatedRequest } from '../core/movie/useCases/getPaginated/GetPaginatedRequest'
 import { GetPaginatedUseCase } from '../core/movie/useCases/getPaginated/GetPaginatedUseCase'
+import { DetailRequest } from '../core/movie/useCases/detail/DetailRequest'
+import { DetailUseCase } from '../core/movie/useCases/detail/DetailUseCase'
 
 const router = Router()
+
+router.get('/detail/v1', async (req: Request, res: Response) => {
+  await RequestService.wrapper(async () => {
+    return await new DetailUseCase(moviePersistence).execute(new DetailRequest(req.query))
+  }, res)
+})
 
 router.get('/paginated/v1', async (req: Request, res: Response) => {
   await RequestService.wrapper(async () => {
