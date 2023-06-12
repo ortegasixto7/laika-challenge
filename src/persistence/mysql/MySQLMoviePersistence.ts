@@ -3,6 +3,7 @@ import { ExceptionCodeEnum } from "../../infrastructure/exception/ExceptionCodeE
 import { MySQLConnection } from "./MySQLConnection";
 import { IMoviePersistence } from '../../core/movie/IMoviePersistence'
 import { Movie } from "../../core/movie/Movie";
+import { Op } from "sequelize";
 
 export class MySQLMoviePersistence extends MySQLConnection implements IMoviePersistence {
 
@@ -18,7 +19,7 @@ export class MySQLMoviePersistence extends MySQLConnection implements IMoviePers
   }
 
   async getByTitleOrNull(title: string): Promise<Movie | null> {
-    const result = await this.movieTable.findOne({ where: { title } })
+    const result = await this.movieTable.findOne({ where: { title: { [Op.like]: `%${title}%` } } })
     if (!result) return null
     return result.toJSON()
   }
