@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express'
 import { RequestService } from '../infrastructure/RequestService'
-import { moviePersistence } from '../infrastructure/DependencyInjector'
+import { moviePersistence, movieExternalService } from '../infrastructure/DependencyInjector'
 import { CreateRequest } from '../core/movie/useCases/create/CreateRequest'
 import { CreateUseCase } from '../core/movie/useCases/create/CreateUseCase'
 import { UpdateRequest } from '../core/movie/useCases/update/UpdateRequest'
@@ -16,7 +16,7 @@ const router = Router()
 
 router.get('/detail/v1', async (req: Request, res: Response) => {
   await RequestService.wrapper(async () => {
-    return await new DetailUseCase(moviePersistence).execute(new DetailRequest(req.query))
+    return await new DetailUseCase(moviePersistence, movieExternalService).execute(new DetailRequest(req.query))
   }, res)
 })
 
