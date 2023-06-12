@@ -21,3 +21,5 @@ CREATE TABLE movies(
   `poster` VARCHAR(255) NOT NULL,
   `ratings` JSON NOT NULL
 );
+
+CREATE INDEX index_title ON movies (`title`);
