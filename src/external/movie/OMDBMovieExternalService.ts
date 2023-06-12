@@ -12,17 +12,17 @@ export class OMDBMovieExternalService implements IMovieExternalService {
       const result = new Movie()
       result.actors = resultApi.data.Actors?.split(', ')
       result.awards = resultApi.data.Awards?.split('. ')
-      result.directors = resultApi.data.Directors?.split(', ')
-      result.duration = resultApi.data.Duration
-      result.genres = resultApi.data.Genres?.split(', ')
-      result.languages = resultApi.data.Languages?.split(', ')
+      result.directors = resultApi.data.Director?.split(', ')
+      result.duration = resultApi.data.Runtime
+      result.genres = resultApi.data.Genre?.split(', ')
+      result.languages = resultApi.data.Language?.split(', ')
       result.plot = resultApi.data.Plot
       result.poster = resultApi.data.Poster
       result.rated = resultApi.data.Rated
       result.rating = Number(resultApi.data.imdbRating)
       result.releasedDate = resultApi.data.Released
       result.title = resultApi.data.Title
-      result.writers = resultApi.data.Writers?.split(', ')
+      result.writers = resultApi.data.Writer?.split(', ')
       result.year = Number(resultApi.data.Year);
       (resultApi.data.Ratings as Array<any>).map((item: any) => {
         result.ratings.push({ source: item.Source, value: item.Value })
