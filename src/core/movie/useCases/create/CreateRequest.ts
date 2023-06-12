@@ -2,6 +2,7 @@ import { MovieRating } from '../../Movie'
 export class CreateRequest {
   title: string = ''
   year: number = 0
+  rating: number = 0
   rated: string = ''
   releasedDate: string = ''
   duration: string = ''
@@ -18,6 +19,7 @@ export class CreateRequest {
   constructor(request: any) {
     if (request.title) this.title = request.title
     if (request.year) this.year = request.year
+    if (request.rating) this.rating = request.rating
     if (request.rated) this.rated = request.rated
     if (request.releasedDate) this.releasedDate = request.releasedDate
     if (request.duration) this.duration = request.duration

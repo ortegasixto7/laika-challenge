@@ -7,6 +7,7 @@ CREATE TABLE movies(
   `id` VARCHAR(50) NOT NULL PRIMARY KEY,
   `title` VARCHAR(255) NOT NULL,
   `year` INT NOT NULL,
+  `rating` FLOAT NOT NULL,
   `rated` VARCHAR(50) NOT NULL,
   `released_date` DATE NOT NULL,
   `duration` VARCHAR(10) NOT NULL,

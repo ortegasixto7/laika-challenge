@@ -25,6 +25,7 @@ export class CreateUseCase implements IUseCaseCommand<CreateRequest>{
     movie.title = request.title
     movie.writers = request.writers
     movie.year = request.year
+    movie.rating = request.rating
     await this.moviePersistence.create(movie)
   }
 }

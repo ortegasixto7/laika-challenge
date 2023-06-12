@@ -17,4 +17,5 @@ export enum ExceptionCodeEnum {
   TITLE_IS_REQUIRED,
   WRITERS_IS_REQUIRED,
   YEAR_IS_REQUIRED,
+  RATING_IS_REQUIRED
 }

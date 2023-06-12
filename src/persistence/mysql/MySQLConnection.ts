@@ -12,6 +12,7 @@ export class MySQLConnection {
       id: { type: DataTypes.STRING, primaryKey: true },
       title: { type: DataTypes.STRING },
       year: { type: DataTypes.INTEGER },
+      rating: { type: DataTypes.FLOAT },
       rated: { type: DataTypes.STRING },
       releasedDate: { type: DataTypes.DATE, field: 'released_date' },
       duration: { type: DataTypes.STRING },
