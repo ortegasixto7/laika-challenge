@@ -4,7 +4,10 @@ if (!process.env.NODE_ENV) {
   dotenv.config()
 }
 
-// import { userRouter } from './routes/userRouter'
+import { MySQLConnection } from './persistence/mysql/MySQLConnection'
+new MySQLConnection().authenticate().catch((err) => console.error(err))
+
+import { movieRouter } from './routes/movieRouter'
 
 const app = express()
 app.use(express.json())
@@ -21,7 +24,7 @@ router.get('/', (_, res: Response) => {
   res.status(200).json({ msg: 'API is working' })
 })
 
-// router.use('/api/users', userRouter)
+router.use('/api/movies', movieRouter)
 
 app.use(router)
 
