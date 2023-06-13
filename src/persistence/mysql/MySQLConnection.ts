@@ -1,10 +1,12 @@
 import { Sequelize, DataTypes, ModelStatic, Model } from 'sequelize';
 import { Movie } from '../../core/movie/Movie';
+import { Auth } from '../../external/auth/Auth';
 
 
 export class MySQLConnection {
   sequelize: Sequelize;
   movieTable: ModelStatic<Model<Movie>>;
+  authTable: ModelStatic<Model<Auth>>;
 
   constructor() {
     this.sequelize = new Sequelize(`mysql://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, { logging: false })
@@ -25,6 +27,15 @@ export class MySQLConnection {
       plot: { type: DataTypes.TEXT },
       poster: { type: DataTypes.STRING },
       ratings: { type: DataTypes.JSON }
+    }, {
+      freezeTableName: true,
+      timestamps: false
+    })
+
+    this.authTable = this.sequelize.define('auth', {
+      id: { type: DataTypes.STRING, primaryKey: true },
+      email: { type: DataTypes.STRING },
+      password: { type: DataTypes.STRING },
     }, {
       freezeTableName: true,
       timestamps: false

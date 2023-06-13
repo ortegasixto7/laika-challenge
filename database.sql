@@ -22,7 +22,15 @@ CREATE TABLE movies(
   `ratings` JSON NOT NULL
 );
 
+DROP TABLE IF EXISTS auth;
+CREATE TABLE auth(
+  `id` VARCHAR(50) NOT NULL PRIMARY KEY,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL
+);
+
 CREATE INDEX index_title ON movies (`title`);
+CREATE INDEX index_email ON auth (`email`);
 
 INSERT INTO `movies` 
 VALUES 
@@ -434,3 +442,5 @@ VALUES
     'https://m.media-amazon.com/images/M/MV5BZTM4ZmJmMTQtMWUxOS00MjQxLTllNmQtNzI4YWVhYzZlNTRkXkEyXkFqcGdeQXVyNjU0NTI0Nw@@._V1_SX300.jpg', 
     '[{\"value\": \"6.2/10\", \"source\": \"Internet Movie Database\"}, {\"value\": \"46%\", \"source\": \"Rotten Tomatoes\"}, {\"value\": \"51/100\", \"source\": \"Metacritic\"}]'
   );
+
+INSERT INTO auth VALUES('9076156f-c878-430b-b4c8-56afb52fa9d5', 'admin@videoclub.com', '$2b$10$OVjDqqUpueOb28bIFvJhFuIcepotGbIt8hBfMm968L8cdK9xOo7xe');
