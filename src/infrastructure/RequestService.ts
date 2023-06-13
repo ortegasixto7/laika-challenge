@@ -1,24 +1,8 @@
 import { BadRequestException } from './exception/BadRequestException';
 import { NotFoundException } from './exception/NotFoundException';
 import { Response } from 'express';
-// import { ExceptionCodeEnum } from './exception/ExceptionCodeEnum';
-// import { IAuthService } from "../external/auth/IAuthService";
-// import { FirebaseAuthService } from "../external/auth/FirebaseAuthService";
 
 export class RequestService {
-  // private authService: IAuthService;
-
-  constructor() {
-    // this.authService = new FirebaseAuthService();
-  }
-
-  // async verifyToken(token: string | undefined): Promise<string> {
-  //   if (!token) throw new BadRequestException(ExceptionCodeEnum.INVALID_AUTH);
-  //   const result = await this.authService.verifyTokenAndGetUser(token);
-  //   if (!result) throw new BadRequestException(ExceptionCodeEnum.INVALID_AUTH);
-  //   console.log('USER_ID', result.uid);
-  //   return result.uid;
-  // }
 
   static async wrapper(callbackFunction: Function, res: Response): Promise<any> {
     try {
