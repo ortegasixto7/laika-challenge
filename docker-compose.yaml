@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0.33
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$DB_PASS
+      - MYSQL_DATABASE=$DB_NAME
+    ports:
+      - 3307:$DB_PORT
+    volumes:
+      - db:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+
+  app:
+    depends_on:
+      - mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laika-challenge-sixto
+    container_name: backend-sixto
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+
+volumes: 
+  db:
