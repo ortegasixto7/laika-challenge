@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express'
+import passport from 'passport';
 import { RequestService } from '../infrastructure/RequestService'
 import { moviePersistence, movieExternalService, cacheService } from '../infrastructure/DependencyInjector'
 import { CreateRequest } from '../core/movie/useCases/create/CreateRequest'
@@ -26,21 +27,21 @@ router.get('/paginated/v1', async (req: Request, res: Response) => {
   }, res)
 })
 
-router.delete('/:id/v1', async (req: Request, res: Response) => {
+router.delete('/:id/v1', passport.authenticate('jwt', { session: false }), async (req: Request, res: Response) => {
   await RequestService.wrapper(async () => {
     req.body.id = req.params.id
     await new DeleteUseCase(moviePersistence).execute(new DeleteRequest(req.body))
   }, res)
 })
 
-router.patch('/:id/v1', async (req: Request, res: Response) => {
+router.patch('/:id/v1', passport.authenticate('jwt', { session: false }), async (req: Request, res: Response) => {
   await RequestService.wrapper(async () => {
     req.body.id = req.params.id
     await new UpdateUseCase(moviePersistence).execute(new UpdateRequest(req.body))
   }, res)
 })
 
-router.post('/v1', async (req: Request, res: Response) => {
+router.post('/v1', passport.authenticate('jwt', { session: false }), async (req: Request, res: Response) => {
   await RequestService.wrapper(async () => {
     await new CreateUseCase(moviePersistence).execute(new CreateRequest(req.body))
   }, res)

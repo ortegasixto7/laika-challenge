@@ -8,10 +8,29 @@ import { MySQLConnection } from './persistence/mysql/MySQLConnection'
 new MySQLConnection().authenticate().catch((err) => console.error(err))
 
 import { movieRouter } from './routes/movieRouter'
+import { authRouter } from './routes/authRouter'
 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+import { Strategy, ExtractJwt } from 'passport-jwt';
+import passport from 'passport';
+passport.use(
+  new Strategy(
+    {
+      secretOrKey: process.env.JWT_SECRET,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
 
 app.use(function (req, _, next) {
   console.info(`REQUEST_BODY: ${JSON.stringify(req.body)}`)
@@ -25,6 +44,7 @@ router.get('/', (_, res: Response) => {
 })
 
 router.use('/api/movies', movieRouter)
+router.use('/api/auth', authRouter)
 
 app.use(router)
 
